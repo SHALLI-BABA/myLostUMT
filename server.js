@@ -13,6 +13,10 @@ app.use('/uploads', express.static('uploads'));
 const lostItemsRoutes = require('./routes/lostItems');
 app.use('/api/lostitems', lostItemsRoutes);
 
+const foundItemsRoutes = require('./routes/foundItems');
+app.use('/api/founditems', foundItemsRoutes);
+
+
 // Replace this with your routes later
 app.get('/', (req, res) => {
   res.send('Lost & Found Backend Running');
