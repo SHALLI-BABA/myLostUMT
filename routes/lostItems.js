@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const LostItem = require('../models/lostItem'); // Make sure this model file exists
+const LostItem = require('../models/lostItems'); // Make sure this model file exists
 
 // POST /api/lostitems - add a lost item
 router.post('/', async (req, res) => {
