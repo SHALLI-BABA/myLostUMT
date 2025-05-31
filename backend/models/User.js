@@ -8,11 +8,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     match: /@umt\.edu\.pk$/  // restrict to UMT emails
   },
-  password: String,
-  isAdmin: {
-  type: Boolean,
-  default: false
-}
+  password: String
 });
 
 module.exports = mongoose.model('User', userSchema);

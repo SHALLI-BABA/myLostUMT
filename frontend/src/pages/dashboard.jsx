@@ -2,10 +2,12 @@ import React from 'react';
 import '../styles/web.css'; // Import related CSS
 import '../styles/normalize.css';
 import '../styles/mylostumt.css';
+import { useAuth } from "../context/AuthContext";
 
 import { Link } from "react-router-dom";
 
 export default function Dashboard() {
+  
   return (
     <div className="main-dashboard-container-flex">
   <div
@@ -78,9 +80,9 @@ export default function Dashboard() {
         <img src="images/menu.png" loading="lazy" alt="" className="icon" />
       </div>
       <div className="user-preview-left-panel">
-        <div className="user-profile-pic-div">
+        <Link className="user-profile-pic-div">
           <img loading="lazy" src="images/profile-user.png" alt="" />
-        </div>
+        </Link>
         <div className="acount-info-div">
           <div className="username">SHALLI</div>
         </div>

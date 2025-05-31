@@ -1,12 +1,22 @@
 // src/pages/Home.js
 import React from 'react';
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import '../styles/web.css'; // Import related CSS
 import '../styles/normalize.css';
 import '../styles/mylostumt.css';
 
 import { Link } from "react-router-dom";
 
-const Home = () => {
+export default function Home() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleDashboardClick = () => {
+    if (user) navigate("/dashboard");
+    else navigate("/login");
+  };
+
   return (
     <div className="page-wrapper">
       <div
@@ -47,9 +57,7 @@ const Home = () => {
             <Link to="/signup" className="navbar_link w-nav-link">
               Sign up
             </Link>
-            <Link to="/login" className="button w-button">
-              Dashboard
-            </Link>
+            <button className='button w-button' onClick={handleDashboardClick}>Dashboard</button>
           </nav>
           <div className="rl_navbar1_menu-button w-nav-button">
             <div className="rl_menu-icon">
@@ -580,4 +588,3 @@ const Home = () => {
   );
 };
 
-export default Home;

@@ -1,11 +1,24 @@
-import React from 'react';
-import '../styles/web.css'; // Import related CSS
+import React, { useState } from 'react';
+import { useAuth } from "../context/AuthContext";
+import { useNavigate, Link } from "react-router-dom";
+import '../styles/web.css';
 import '../styles/normalize.css';
 import '../styles/mylostumt.css';
 
-import { Link } from "react-router-dom";
+export default function Login() {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-export default function login() {
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const success = await login(email, password);
+    if (success) navigate("/dashboard");
+    else setError("Invalid credentials");
+  };
+
   return (
     <div className="page-wrapper">
   <div
@@ -83,6 +96,7 @@ export default function login() {
             <div className="w-layout-vflex demo-form-wrapper">
               <div className="contact-form-block w-form">
                 <form
+                  onSubmit={handleSubmit}
                   id="wf-form-Login-form"
                   name="wf-form-Login-form"
                   data-name="Login form"
@@ -96,6 +110,7 @@ export default function login() {
                       Email Address
                     </label>
                     <input
+                      value={email} onChange={e => setEmail(e.target.value)}
                       className="text-field w-input"
                       maxLength={256}
                       name="email"
@@ -111,6 +126,7 @@ export default function login() {
                       Password
                     </label>
                     <input
+                      value={password} onChange={e => setPassword(e.target.value)}
                       className="text-field w-input"
                       maxLength={256}
                       name="password"
@@ -121,12 +137,7 @@ export default function login() {
                       required=""
                     />
                   </div>
-                  <input
-                    type="submit"
-                    data-wait="Please wait..."
-                    className="button-primary w-button"
-                    defaultValue="Submit"
-                  />
+                  <button className="button-primary w-button" type="submit">Login</button>
                 </form>
                 <div className="w-form-done">
                   <div>Thank you! Your submission has been received!</div>

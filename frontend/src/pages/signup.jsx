@@ -1,4 +1,7 @@
 import React from 'react';
+import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import '../styles/web.css'; // Import related CSS
 import '../styles/normalize.css';
 import '../styles/mylostumt.css';
@@ -6,6 +9,19 @@ import '../styles/mylostumt.css';
 import { Link } from "react-router-dom";
 
 export default function Signup() {
+  const { signup } = useAuth();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    const success = await signup(email, password);
+    if (success) navigate("/dashboard");
+    else setError("Signup failed");
+  };
+
   return (
     <div className="page-wrapper">
       <div
@@ -84,6 +100,7 @@ export default function Signup() {
                 <div className="w-layout-vflex demo-form-wrapper">
                   <div className="contact-form-block w-form">
                     <form
+                      onSubmit={handleSubmit}
                       id="wf-form-Signup-form"
                       name="wf-form-Signup-form"
                       data-name="Signup form"
@@ -112,6 +129,7 @@ export default function Signup() {
                           Email Address
                         </label>
                         <input
+                          value={email} onChange={e => setEmail(e.target.value)}
                           className="text-field w-input"
                           maxLength={256}
                           name="email"
@@ -127,6 +145,7 @@ export default function Signup() {
                           Password
                         </label>
                         <input
+                          value={password} onChange={e => setPassword(e.target.value)}
                           className="text-field w-input"
                           maxLength={256}
                           name="password"
@@ -137,28 +156,13 @@ export default function Signup() {
                           required=""
                         />
                       </div>
-                      <div className="w-layout-vflex">
-                        <label htmlFor="confirm-Password" className="field-label-2">
-                          Confirm Password
-                        </label>
-                        <input
-                          className="text-field w-input"
-                          maxLength={256}
-                          name="confirm-Password"
-                          data-name="confirm Password"
-                          placeholder=""
-                          type="password"
-                          id="confirm-Password"
-                          required=""
-                        />
-                      </div>
                       <label className="w-checkbox checkbox-field">
                         <input
                           type="checkbox"
                           name="checkbox"
                           id="checkbox"
                           data-name="Checkbox"
-                          required=""
+                          required="true"
                           className="w-checkbox-input checkbox"
                         />
                         <span
@@ -168,12 +172,7 @@ export default function Signup() {
                           By submitting this form, you agree to our privacy policy
                         </span>
                       </label>
-                      <input
-                        type="submit"
-                        data-wait="Please wait..."
-                        className="button-primary w-button"
-                        defaultValue="Submit"
-                      />
+                      <button className="button-primary w-button" type="submit">Sign Up</button>
                     </form>
                     <div className="w-form-done">
                       <div>Thank you! Your submission has been received!</div>
